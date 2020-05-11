@@ -1,6 +1,6 @@
-mod gatt;
+mod ble;
 
-use self::gatt::{create_info, create_uart};
+use self::ble::create_uart;
 use bluster::Peripheral;
 use futures::{future, prelude::*};
 use futures_timer::FutureExt;
@@ -9,7 +9,7 @@ use std::time::Duration;
 use tokio::runtime::current_thread::Runtime;
 use uuid::Uuid;
 
-const ADVERTISING_NAME: &str = "Raspberry Pi";
+const ADVERTISING_NAME: &str = "Create 2";
 const ADVERTISING_UUID: &str = "48c5d828-ac2a-442d-97a3-0c9822b04979";
 
 fn main() {
@@ -20,7 +20,6 @@ fn main() {
     // Create peripheral
     let peripheral_future = Peripheral::new(&runtime);
     let peripheral = Arc::new({ runtime.lock().unwrap().block_on(peripheral_future).unwrap() });
-    peripheral.add_service(&create_info(&runtime)).unwrap();
     peripheral.add_service(&create_uart(&runtime)).unwrap();
 
     // Create advertisement

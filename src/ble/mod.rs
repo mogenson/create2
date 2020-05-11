@@ -1,7 +1,7 @@
-mod characteristic_rx;
-mod characteristic_tx;
-use self::characteristic_rx::create_rx;
-use self::characteristic_tx::create_tx;
+mod rx;
+mod tx;
+use self::rx::create_rx;
+use self::tx::create_tx;
 use bluster::gatt::service::Service;
 use std::{
     collections::HashSet,
